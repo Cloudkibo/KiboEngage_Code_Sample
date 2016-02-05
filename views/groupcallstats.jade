@@ -62,13 +62,17 @@ block div#mycontent
             if(object._id.month<10)
              - var mm='0'+object._id.month
             else
-             - var mm=object._id.month  
+             - var mm=object._id.month 
+            
             tr
               td= object._id.year+'-'+mm+'-'+dd
+              - var flag=0
               - each obj in deptNames
                 if object._id.departmentid == obj._id
                   td=obj.deptname
-                  
+                  - flag=1
+              if(flag==0)
+                  td='No department name found'
               td=object.count
              
                   
