@@ -1,0 +1,77 @@
+extends sidebar
+block div#mycontent
+  
+  ul(class="nav navbar-nav")
+    li
+      a(href="/")
+        span
+          | Datewise Call statistics
+    li(class="active")
+      a(href="/agentscallstats")
+        span
+          | Agentwise Call statistics
+    li
+      a(href="/groupcallstats")
+        span
+          | Groupwise Call statistics
+  
+  div(class = "caption",id = "datewisecalls")
+    i(class = "fa fa-group")
+      span 
+        |Agentwise Call Statistics
+    div
+    div(class = "control-group span6")
+      a(href ='/agentscallstats/downloadcsv/',class = "downloadcsv btn btn-info")
+          |Export data in CSV
+      
+    div(class = "control-group span6")
+      label
+        | From
+      input( type="date" name="startdate" id="startdate" class="form-control")
+      label
+        | To
+      input( type="date" name="enddate" id="enddate" class="form-control")
+      button(id="searchTerm" class ="btn btn-default"  onclick="doSearch()")
+        | Search
+      label
+        | Search Agent :
+       
+      input(type="search" class="light-table-filter form-control input-medium input-inline" data-table="myTableDatewise" placeholder="Enter Agent Name")
+       
+     
+     
+     
+    div.bodycontainer.table-scrollable
+      table(class = "table table-striped table-bordered table-hover myTableDatewise",id = "agents")
+        thead
+          tr
+            td 
+              span
+                |Date
+            td
+              span
+                |Agent
+        
+            td
+              span
+                |Calls Completed
+            
+            
+        tbody
+          - each object in myinfo
+            if(object._id.day<10)
+             - var dd='0'+object._id.day
+            else
+             - var dd=object._id.day
+            if(object._id.month<10)
+             - var mm='0'+object._id.month
+            else
+             - var mm=object._id.month  
+            tr
+              td= object._id.year+'-'+mm+'-'+dd
+              td=object._id.agentName
+              td=object.count
+        
+              
+                
+

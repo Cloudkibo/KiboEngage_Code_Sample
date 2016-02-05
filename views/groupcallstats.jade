@@ -1,0 +1,78 @@
+extends sidebar
+block div#mycontent
+  
+  ul(class="nav navbar-nav")
+    li
+      a(href="/")
+        span
+          | Datewise Call statistics
+    li
+      a(href="/agentscallstats")
+        span
+          | Agentwise Call statistics
+    li(class="active")
+      a(href="/groupcallstats")
+        span
+          | Groupwise Call statistics
+  
+  div(class = "caption",id = "datewisecalls")
+    i(class = "fa fa-group")
+      span 
+        |Groupwise Call Statistics
+    div
+     a(href ='/groupcallstats/downloadcsv/',class = "downloadcsv btn btn-info")
+          |Export data in CSV
+     div(class = "control-group span6")
+      label
+        | From
+      input( type="date" name="startdate" id="startdate" class="form-control")
+      label
+        | To
+      input( type="date" name="enddate" id="enddate" class="form-control")
+      button(id="searchTerm" class ="btn btn-default"  onclick="doSearch()")
+        | Search
+      label
+        | Search Group :
+       
+      input(type="search" class="light-table-filter form-control input-medium input-inline" data-table="myTableDatewise" placeholder="Enter Group Name")
+       
+   
+    div.bodycontainer.table-scrollable
+      table(class = "table table-striped table-bordered table-hover myTableDatewise",id = "agents")
+        thead
+          tr
+            td 
+              span
+                |Date
+            td
+              span
+                |Department
+        
+            td
+              span
+                |Count
+            
+            
+        tbody
+          - each object in deptcalls
+            if(object._id.day<10)
+             - var dd='0'+object._id.day
+            else
+             - var dd=object._id.day
+            if(object._id.month<10)
+             - var mm='0'+object._id.month
+            else
+             - var mm=object._id.month  
+            tr
+              td= object._id.year+'-'+mm+'-'+dd
+              - each obj in deptNames
+                if object._id.departmentid == obj._id
+                  td=obj.deptname
+                  
+              td=object.count
+             
+                  
+        
+              
+                
+

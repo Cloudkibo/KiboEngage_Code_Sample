@@ -1,0 +1,27 @@
+extends sidebar
+block div#mycontent
+  div.caption
+    i(class = "glyphicon glyphicon-link")
+      span 
+        |Company Profile
+    div
+    div(class = "control-group span6")
+      label
+        | Search :
+       
+      input(type="search" class="light-table-filter form-control input-medium input-inline" data-table="company" placeholder="Enter search term")
+  
+ 
+    div.bodycontainer.table-scrollable
+      table(class = "table table-striped table-bordered table-hover company",id = "agents")
+        tbody
+          form(action="/companyprofile/downloadcsv",method="post")
+              - var dd=JSON.stringify(mydata)
+                input(type="hidden" name ="dd" value = dd)
+              - for(i in mydata) {
+                tr
+                  td=i
+                  td=mydata[i]
+              - }
+                button(class = "downloadcsv btn btn-info" type="submit")
+                 |Export Company profile in CSV  

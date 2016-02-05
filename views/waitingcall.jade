@@ -1,0 +1,53 @@
+extends sidebar
+block div#mycontent
+  
+  div.caption
+    i(class = "glyphicon glyphicon-earphone")
+      span 
+        |Waiting Calls Information
+    a(href ='/completedcalls/downloadcsv/',class = "downloadcsv btn btn-info")
+        |Export Visitor Calls data in CSV
+
+    div.table-scrollable
+      table(class = "table table-striped table-bordered table-hover dataTable",id = "agents")
+        thead
+          tr
+            td 
+              span
+                |Visitor Name
+            td
+              span
+                |Visitor Email
+            td
+              span
+                |Question
+            td
+              span
+                |Current Page
+            td
+              span
+                |Agent Name
+            td
+              span
+                |Wait time duration    
+            td
+              span
+                |Initiator
+            
+        tbody
+          if (mydata.length != 0)
+            - each object in mydata
+              tr
+                td= object.username
+                td=object.useremail
+                td=object.question
+                td=object.currentPage
+                td=object.agentname
+                td=waittime(object.requesttime)
+                td=object.initiator
+          else
+              tr
+                td(colspan = 7,style = "text-align:center;")="No waiting calls"
+                  
+                
+       

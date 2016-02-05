@@ -1,0 +1,49 @@
+extends sidebar
+block div#mycontent
+  
+  div.caption
+    i(class = "fa fa-group")
+      span 
+        |Groups Information
+    div
+    div(class = "control-group span6")
+      label
+        | Search :
+       
+      input(type="search" class="light-table-filter form-control input-medium input-inline" data-table="groups" placeholder="Enter search term")
+      a(href ='/groups/downloadcsv/',class = "downloadcsv btn btn-info")
+          |Export data in CSV
+  
+  
+    div.bodycontainer.table-scrollable
+      table(class = "table table-striped table-bordered table-hover groups",id = "agents")
+        thead
+          tr
+            td 
+              span
+                |Name
+            td
+              span
+                |Description
+            td
+              span
+                |Created By
+            td
+              span
+                |Company    
+            td
+              span
+                |Created On
+            
+        tbody
+          - each object in mydata
+            tr
+              td= object.deptname
+              td=object.deptdescription
+              td=object.createdby.firstname + ' ' + object.createdby.lastname
+              td=object.createdby.companyName
+              td=object.creationdate
+        
+              
+                
+
