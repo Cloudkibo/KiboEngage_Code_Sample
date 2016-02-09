@@ -6,17 +6,34 @@ var request = require('request');
 var moment = require('moment');
 var json2csv = require('json2csv');
 var fs = require('fs');
-var  headers =  {
+var headers;
+/*var  headers =  {
              'kibo-app-id' : '5wdqvvi8jyvfhxrxmu73dxun9za8x5u6n59',
              'kibo-app-secret': 'jcmhec567tllydwhhy2z692l79j8bkxmaa98do1bjer16cdu5h79xvx',
              'kibo-client-id': 'cd89f71715f2014725163952'     
           }
-/* GET home page. */
-/*router.get('/', function(req, res, next) {
-  res.send('Hello world');
-});
 */
 router.get('/', function(req, res, next) {
+      res.render('index');
+
+ });
+
+router.post('/', function(req, res, next) {
+      req.session.kiboappid = req.body.kiboappid;
+      req.session.kiboappsecret = req.body.kiboappsecret;
+      req.session.kiboclientid = req.body.kiboclientid;
+      headers =  {
+              'kibo-app-id': req.session.kiboappid ,
+              'kibo-app-secret': req.session.kiboappsecret,
+              'kibo-client-id': req.session.kiboclientid,
+              'content-type' : 'application/x-www-form-urlencoded'
+              
+          };
+      res.render('index',{myinfo :"Session saved."});
+
+ });
+
+router.get('/callstatistics', function(req, res, next) {
 
    var options = {
           url: 'https://api.kibosupport.com/api/visitorcalls/datewisecallstats',
@@ -31,7 +48,7 @@ router.get('/', function(req, res, next) {
             var i =0;
             console.log(info.length)
             console.log(info);  
-            res.render('index',{mydata:info});
+            res.render('callstatistics',{mydata:info});
 
           }
       else

@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('client-sessions');
 
 var routes = require('./routes/index');
 var agents = require('./routes/agents');
@@ -22,7 +23,7 @@ var agentscallstats = require('./routes/agentscallstats');
 var app = express();
 
 // view engine setup
-app.set('port', process.env.PORT || 6688);
+app.set('port', process.env.PORT || 6677);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -33,7 +34,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({secret: '1234567890QWERTY'}));
+app.use(session({
+  cookieName: 'session',
+  secret: '1234567890QWERTY',
+  duration: 30 * 60 * 100000000,
+  activeDuration: 5 * 60 * 100000000,
+}));
 app.use('/', routes);
 app.use('/', agents);
 app.use('/', groups);
